@@ -24,8 +24,11 @@ class AdminCreateStyle(forms.Form):
                 field.widget.attrs['class'] += ' col-11'
 
     def save(self):
-        field = self.cleaned_data['field']
         style_value = self.cleaned_data['style_value']
+        style_instance = Field.objects.filter(style__style__name=self.cleaned_data['style'])
+        field = self.cleaned_data['field']
+        if style_instance:
+            field.style.remove()
         field.style.add(style_value)
 
 
