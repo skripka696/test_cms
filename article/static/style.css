@@ -1,0 +1,8 @@
+.form_field,
+.add_style #add_more{
+    margin: 15px;
+}
+
+.add_style label {
+    padding-top: 20px;
+}

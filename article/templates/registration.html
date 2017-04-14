@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+<form action="" method="post">{% csrf_token %}
+
+    <div class="form-group">
+        <label for="InputUsername">Username: </label>
+        {{form.username}}
+        {% if form.username.errors %}
+            {{form.username.errors}}
+        {%endif%}
+    </div>
+    <div class="form-group">
+        <label for="InputRole">Role: </label>
+        {{form.role}}
+        {% if form.role.errors %}
+            {{form.role.errors}}
+        {%endif%}
+    </div>
+    <div class="form-group">
+        <label for="InputGender">Gender: </label>
+        {{form.gender}}
+        {% if form.gender.errors %}
+            {{form.gender.errors}}
+        {%endif%}
+    </div>
+    <div class="form-group">
+        <label for="InputPassword">Password: </label>
+        {{form.password1}}
+        {% if form.password1.errors%}
+            {{form.password1.errors}}
+        {% endif %}
+    </div>
+    <div class="form-group">
+        <label for="InputPasswordConfirmation">Password confirmation: </label>
+        {{form.password2}}
+        {% if form.password2.errors %}
+            {{form.password2.errors}}
+        {% endif %}
+    </div>
+    {% for field, errors in form.errors.items %}
+    {% for error in errors %}
+        {{error}}
+    {% endfor %}
+    {% endfor %}
+
+
+    {% for field in form.non_fields_errors %}
+        {{field}}
+    {% endfor %}
+    <button type="submit" class="btn btn-default">Registration</button>
+</form>
+{% endblock %}

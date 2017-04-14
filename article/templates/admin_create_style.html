@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Login{% endblock %}
+
+{% block js %}
+<script src="{%  static 'js/add_form_style.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<form class="add_style" action="" method="post">
+    <div class="form_content row col-12">
+        {{ form }}
+        <input class="btn btn-default col-1" type="button" value="Add More" id="add_more">
+    </div>
+
+</form>
+{% endblock %}
