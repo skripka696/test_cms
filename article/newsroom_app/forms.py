@@ -1,5 +1,6 @@
 from django import forms
 from django.forms import formset_factory
+from django.forms.formsets import BaseFormSet
 from newsroom_app.models import Field, Style, StyleValue, ArticleContent
 
 
@@ -27,7 +28,23 @@ class AdminCreateStyle(forms.Form):
         style_value = self.cleaned_data['style_value']
         field.style.add(style_value)
 
-AdminCreateStyleFormSet = formset_factory(AdminCreateStyle, extra=1)
+
+class BaseArticleFormSet(BaseFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+
+        for i in range(0, self.total_form_count()):
+            f1_cleaned_data = self.forms[i].cleaned_data
+            for j in range(0, self.total_form_count()):
+                f2_cleaned_data = self.forms[j].cleaned_data
+                if f1_cleaned_data['style'] == f2_cleaned_data['style']:
+                    raise forms.ValidationError('You choosed two or more equal styles')
+
+
+AdminCreateStyleFormSet = formset_factory(AdminCreateStyle,
+                                          formset=BaseArticleFormSet,
+                                          extra=1)
 
 
 class CreateArticle(forms.Form):

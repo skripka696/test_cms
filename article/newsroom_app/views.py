@@ -19,10 +19,10 @@ class CreateStyle(FormView):
                 if form.is_valid():
                     form.save()
                 else:
-                    return self.render_to_response(formset.get_context_data())
+                    return self.render_to_response(self.get_context_data())
             return HttpResponse()
         else:
-            return self.render_to_response(formset.get_context_data())
+            return self.render_to_response(self.get_context_data(form=formset))
 
     def get_context_data(self, **kwargs):
         context = super(CreateStyle, self).get_context_data(**kwargs)

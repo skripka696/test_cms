@@ -11,21 +11,28 @@
 {% endblock %}
 
 {% block content %}
-<form class="add_style" action="" method="post">
-    {% csrf_token %}
-    {{ form.management_form }}
-    <div class="form_content row col-12">
-        {% for field in form%}
-            {{ field }}
-        {% endfor%}
-        {% if form.errors %}
+    <div class="row col-12">
+        {% if form.errors  %}
             {{ form.errors }}
         {% endif %}
-        <div class="col-1">
-            <input class="add_more btn btn-default" type="button" value="Add More">
-        </div>
+        {% if form.non_form_errors %}
+            {{ form.non_form_errors }}
+        {% endif %}
     </div>
-    <div class="add_content"></div>
-    <input id="save_form" class="btn btn-default pull-right col-1" type="submit" value="Save"/>
-</form>
+    <form class="add_style row col-12" action="" method="post">
+        {% csrf_token %}
+        {{ form.management_form }}
+        <div class="form_content row col-12">
+            {% for field in form %}
+                {{ field }}
+            {% endfor%}
+            <div class="col-1">
+                <input class="add_more btn btn-default" type="button" value="Add More">
+            </div>
+        </div>
+        <div class="add_content row col-12"></div>
+        <div class="col-12">
+            <input id="save_form" class="btn btn-default pull-right col-1" type="submit" value="Save"/>
+        </div>
+    </form>
 {% endblock %}
