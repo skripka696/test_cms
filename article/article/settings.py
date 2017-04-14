@@ -140,3 +140,8 @@ LOGIN_REDIRECT_URL = '/home/'
 LOGIN_URL = '/login/'
 
 AUTH_USER_MODEL = 'user_profile.User'
+
+try:
+    from .local_settings import *
+except:
+    pass

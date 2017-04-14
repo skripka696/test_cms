@@ -8,10 +8,16 @@
 
 {% block content %}
 <form class="add_style" action="" method="post">
+    {% csrf_token %}
     <div class="form_content row col-12">
         {{ form }}
-        <input class="add_more btn btn-default col-1" type="button" value="Add More">
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+        <div class="col-1">
+            <input class="add_more btn btn-default" type="button" value="Add More">
+        </div>
     </div>
-
+    <input id="save_form" class="btn btn-default pull-right col-1" type="submit" value="Save"/>
 </form>
 {% endblock %}

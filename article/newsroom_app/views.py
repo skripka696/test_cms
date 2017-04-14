@@ -12,17 +12,20 @@ class CreateStyle(FormView):
     form_class = AdminCreateStyleFormSet
 
     def post(self, request, *args, **kwargs):
-        return HttpResponse()
+        formset = AdminCreateStyleFormSet(request.POST)
+        if formset.is_valid():
+            for form in formset.forms:
+                if form.is_valid():
+                    form.save()
+                else:
+                    return self.render_to_response(formset.get_context_data())
+            return HttpResponse()
+        else:
+            return self.render_to_response(formset.get_context_data())
 
     def get_context_data(self, **kwargs):
         context = super(CreateStyle, self).get_context_data(**kwargs)
         return context
-    # def get(self, request, *args, **kwargs):
-    #     fields = Field.objects.all()
-    #     # styles = StyleValue.objects.all()
-    #     context = {'fields': fields}
-    #
-    #     return render(request, self.template_name, context)
 
 
 class CreateArticle(FormView):

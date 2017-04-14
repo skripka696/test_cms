@@ -1,8 +1,13 @@
 .form_field,
-.add_style #add_more{
+.add_style .add_more,
+.add_style .remove{
     margin: 15px;
 }
 
 .add_style label {
     padding-top: 20px;
+}
+
+#save_form{
+    right: 65px;
 }

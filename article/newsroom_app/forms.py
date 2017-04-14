@@ -15,8 +15,12 @@ class AdminCreateStyle(forms.Form):
             if key != 'field':
                 field.widget.attrs['class'] += ' col-4'
             else:
-                field.widget.attrs['class'] += ' col-12'
+                field.widget.attrs['class'] += ' col-11'
 
+    def save(self):
+        field = self.cleaned_data['field']
+        style_value = self.cleaned_data['style_value']
+        field.style.add(style_value)
 
 AdminCreateStyleFormSet = formset_factory(AdminCreateStyle, extra=1)
 
