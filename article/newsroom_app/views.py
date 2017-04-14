@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic import CreateView
 from django.views.generic import FormView
-from newsroom_app.models import StyleValue, Field
+from newsroom_app.models import StyleValue, Field, ArticleContent
 from newsroom_app.forms import AdminCreateStyleFormSet
 
 
@@ -25,3 +25,13 @@ class CreateStyle(FormView):
     #     return render(request, self.template_name, context)
 
 
+class CreateArticle(FormView):
+    model = ArticleContent
+    template_name = 'create_article.html'
+
+    def post(self, request, *args, **kwargs):
+        return HttpResponse()
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateArticle, self).get_context_data(**kwargs)
+        return context
