@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import formset_factory
-from newsroom_app.models import Field, Style, StyleValue
+from newsroom_app.models import Field, Style, StyleValue, ArticleContent
 
 
 class AdminCreateStyle(forms.Form):
@@ -30,3 +30,7 @@ class AdminCreateStyle(forms.Form):
 AdminCreateStyleFormSet = formset_factory(AdminCreateStyle, extra=1)
 
 
+class CreateArticle(forms.Form):
+    class Meta:
+        models = ArticleContent
+        fields = '__all__'
