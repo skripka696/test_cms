@@ -13,8 +13,11 @@
 {% block content %}
 <form class="add_style" action="" method="post">
     {% csrf_token %}
+    {{ form.management_form }}
     <div class="form_content row col-12">
-        {{ form }}
+        {% for field in form%}
+            {{ field }}
+        {% endfor%}
         {% if form.errors %}
             {{ form.errors }}
         {% endif %}
@@ -22,6 +25,7 @@
             <input class="add_more btn btn-default" type="button" value="Add More">
         </div>
     </div>
+    <div class="add_content"></div>
     <input id="save_form" class="btn btn-default pull-right col-1" type="submit" value="Save"/>
 </form>
 {% endblock %}
