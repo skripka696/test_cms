@@ -3,7 +3,11 @@
 {% block title %}Login{% endblock %}
 
 {% block js %}
-<script src="{%  static 'js/add_form_style.js' %}"></script>
+    <script>
+        var url_to_get_style_options = "{% url 'get_style_options' 0 %}";
+    </script>
+    <script src="{%  static 'js/add_form_style.js' %}"></script>
+    <script src="{%  static 'js/get_style_options.js' %}"></script>
 {% endblock %}
 
 {% block content %}

@@ -13,6 +13,11 @@ class AdminCreateStyle(forms.Form):
         for key, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control form_field'
             if key != 'field':
+                if key == 'style_value':
+                    field.widget.attrs['disabled'] = 'disabled'
+                    field.widget.attrs['class'] += ' style_option'
+                else:
+                    field.widget.attrs['class'] += ' style_name'
                 field.widget.attrs['class'] += ' col-4'
             else:
                 field.widget.attrs['class'] += ' col-11'
