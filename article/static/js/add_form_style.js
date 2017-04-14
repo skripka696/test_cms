@@ -1,12 +1,11 @@
 $(function(){
         var content_first = $('.form_content').clone();
-        content.removeClass("form_content");
+        content_first.removeClass("form_content");
         $('form').on('click', "input.add_more", function (e) {
             var forms_id = parseInt($('#id_form-TOTAL_FORMS').val());
             forms_id += 1;
             $('#id_form-TOTAL_FORMS').val(forms_id);
             var content = $(content_first).clone();
-            console.log(content);
             var selects = $('select', content);
             $('.add_more').val('Remove').addClass('remove').removeClass('add_more');
             $('.remove', content).val('Add More').addClass('add_more').removeClass('remove');
