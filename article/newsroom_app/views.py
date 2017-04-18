@@ -6,6 +6,9 @@ from django.views.generic import FormView
 from newsroom_app.models import StyleValue, Field, ArticleContent
 from newsroom_app.forms import AdminCreateStyleFormSet
 
+from newsroom_app.forms import CreateArticleForm
+from newsroom_app.models import Article
+
 
 class CreateStyle(FormView):
     model = Field
@@ -38,8 +41,9 @@ def get_style_options(request, id):
 
 
 class CreateArticle(FormView):
-    model = ArticleContent
+    model = Article
     template_name = 'create_article.html'
+    form_class = CreateArticleForm
 
     def post(self, request, *args, **kwargs):
         return HttpResponse()

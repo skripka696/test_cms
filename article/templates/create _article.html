@@ -5,9 +5,23 @@
 {% block js %}
 <script src="{%  static 'js/add_form_style.js' %}"></script>
 {% endblock %}
+<script>
+    tinymce.init({
+      selector: '.mytextarea'
+    });
+</script>
 
 {% block content %}
-<form class="add_article" action="" method="post">
+<form class="add_article" action="" method="post">{% csrf_token %}
+    <!--<div class="dropdown">-->
+        <!--<i class="fa fa-plus-circle fa-3x" aria-hidden="true" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>-->
+        <!--<div class="dropdown-menu" aria-labelledby="dropdownMenu2">-->
+            <!--<button class="dropdown-item" type="button">Action</button>-->
+            <!--<button class="dropdown-item" type="button">Another action</button>-->
+            <!--<button class="dropdown-item" type="button">Something else here</button>-->
+        <!--</div>-->
+    <!--</div>-->
+    {{form.as_p}}
 
 </form>
 {% endblock %}

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'newsroom_app.apps.NewsroomAppConfig',
     'user_profile.apps.UserProfileConfig',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
