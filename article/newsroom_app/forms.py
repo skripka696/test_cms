@@ -25,28 +25,28 @@ class AdminCreateStyle(forms.Form):
 
     def save(self):
         style_value = self.cleaned_data['style_value']
-        style_instance = Field.objects.filter(style__style__name=self.cleaned_data['style'])
         field = self.cleaned_data['field']
-        if style_instance:
-            field.style.remove()
+        style_instance = field.style.filter(style__id=self.cleaned_data.get('style').id)
+        if style_instance.exists():
+            field.style.remove(style_instance[0])
         field.style.add(style_value)
 
 
-class BaseArticleFormSet(BaseFormSet):
-    def clean(self):
-        if any(self.errors):
-            return
-
-        for i in range(0, self.total_form_count()):
-            f1_cleaned_data = self.forms[i].cleaned_data
-            for j in range(0, self.total_form_count()):
-                f2_cleaned_data = self.forms[j].cleaned_data
-                if f1_cleaned_data['style'] == f2_cleaned_data['style']:
-                    raise forms.ValidationError('You choosed two or more equal styles')
-
+# class BaseArticleFormSet(BaseFormSet):
+#     def clean(self):
+#         if any(self.errors):
+#             return
+#
+#         for i in range(0, self.total_form_count()):
+#             f1_cleaned_data = self.forms[i].cleaned_data
+#             for j in range(0, self.total_form_count()):
+#                 f2_cleaned_data = self.forms[j].cleaned_data
+#                 if f1_cleaned_data['style'] == f2_cleaned_data['style']:
+#                     raise forms.ValidationError('You choosed two or more equal styles')
+#
 
 AdminCreateStyleFormSet = formset_factory(AdminCreateStyle,
-                                          formset=BaseArticleFormSet,
+                                          # formset=BaseArticleFormSet,
                                           extra=1)
 
 
