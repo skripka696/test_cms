@@ -11,26 +11,49 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row col-12">
-        {% if form.errors  %}
-            {{ form.errors }}
-        {% endif %}
+    <div class="content col-12">
         {% if form.non_form_errors %}
-            {{ form.non_form_errors }}
+            <div class="row alert alert-danger" role="alert" style="margin-top: 20px;">
+                {% for error in form.non_form_errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
         {% endif %}
     </div>
     <form class="add_style row col-12" action="" method="post">
         {% csrf_token %}
         {{ form.management_form }}
-        <div class="form_content row col-12">
-            {% for field in form %}
-                {{ field }}
-            {% endfor%}
-            <div class="col-1">
-                <input class="add_more btn btn-default" type="button" value="Add More">
+        <div class="content col-12">
+            <div class="form_content row">
+                {% if form.non_form_errors or form.errors %}
+                    {% for form_child in form %}
+                        <div class="row col-12">
+                            {{ form_child }}
+                            <div class="col-1">
+                                <input class="remove btn btn-default" type="button" value="Remove">
+                            </div>
+                        </div>
+                        {% if form_child.errors %}
+                            <div class="row col-12 alert alert-danger" role="alert" style="margin-top: 20px;">
+                                {% for error in form_child.errors.values %}
+                                    {% for err in error %}
+                                        {{ err }}
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% for form_child in form %}
+                        {{ form_child }}
+                    {% endfor %}
+                    <div class="col-1">
+                        <input class="add_more btn btn-default" type="button" value="Add More">
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <div class="add_content row col-12"></div>
+        <div class="add_content content col-12"></div>
         <div class="col-12">
             <input id="save_form" class="btn btn-default pull-right col-1" type="submit" value="Save"/>
         </div>

@@ -17,11 +17,12 @@ $(function(){
             $('.add_content').append(content);
         });
         $('form').on('click', "input.remove", function (e) {
-
             var forms_id = parseInt($('#id_form-TOTAL_FORMS').val());
             forms_id -= 1;
             $('#id_form-TOTAL_FORMS').val(forms_id);
-            $(this).parent().parent().remove();
+            $(this).parent().parent().fadeOut(300, function(){
+                $(this).remove();
+            });
             var divs = $('div', 'form');
             for (var i=0; i< divs.length; i++){
                 var selects = $('select', divs[i]);
@@ -31,6 +32,5 @@ $(function(){
                 }
 
             }
-
         })
     });

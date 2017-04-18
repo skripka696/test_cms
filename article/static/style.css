@@ -1,7 +1,11 @@
 .form_field,
-.add_style .add_more,
-.add_style .remove{
+.add_style .add_more{
     margin: 15px;
+}
+
+.add_style .remove{
+    margin-top: 15px;
+    margin-left: 25px;
 }
 
 .add_style label {

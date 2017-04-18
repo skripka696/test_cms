@@ -24,12 +24,13 @@ class AdminCreateStyle(forms.Form):
                 field.widget.attrs['class'] += ' col-11'
 
     def save(self):
-        style_value = self.cleaned_data['style_value']
-        style_instance = Field.objects.filter(style__style__name=self.cleaned_data['style'])
-        field = self.cleaned_data['field']
+        style_value = self.cleaned_data.get('style_value')
+        style_instance = Field.objects.filter(style__style__name=self.cleaned_data.get('style'))
+        field = self.cleaned_data.get('field')
         if style_instance:
             field.style.remove()
-        field.style.add(style_value)
+        if style_value:
+            field.style.add(style_value)
 
 
 class BaseArticleFormSet(BaseFormSet):
@@ -37,12 +38,14 @@ class BaseArticleFormSet(BaseFormSet):
         if any(self.errors):
             return
 
-        for i in range(0, self.total_form_count()):
-            f1_cleaned_data = self.forms[i].cleaned_data
-            for j in range(0, self.total_form_count()):
-                f2_cleaned_data = self.forms[j].cleaned_data
-                if f1_cleaned_data['style'] == f2_cleaned_data['style']:
-                    raise forms.ValidationError('You choosed two or more equal styles')
+        if self.total_form_count() > 1:
+            for i in range(0, self.total_form_count()):
+                f1_cleaned_data = self.forms[i].cleaned_data
+                for j in range(0, self.total_form_count()):
+                    f2_cleaned_data = self.forms[j].cleaned_data
+                    if f1_cleaned_data.get('style') and f2_cleaned_data.get('style'):
+                        if f1_cleaned_data.get('style') == f2_cleaned_data.get('style'):
+                            raise forms.ValidationError('You choosed two or more equal styles')
 
 
 AdminCreateStyleFormSet = formset_factory(AdminCreateStyle,
