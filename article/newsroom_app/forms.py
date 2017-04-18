@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import formset_factory
 from django.forms.formsets import BaseFormSet
-from newsroom_app.models import Field, Style, StyleValue, ArticleContent
+from newsroom_app.models import Field, Style, Article, StyleValue, ArticleContent
 
 
 class AdminCreateStyle(forms.Form):
@@ -53,7 +53,21 @@ AdminCreateStyleFormSet = formset_factory(AdminCreateStyle,
                                           extra=1)
 
 
-class CreateArticle(forms.Form):
+class CreateArticleForm(forms.Form):
+    status = forms.ChoiceField(label='Status', choices=Article.STATUS_CHOICES)
+    access = forms.ChoiceField(label='Access', choices=Article.ACCESS_CHOICES)
+    field_text = forms.ModelChoiceField(queryset=Field.objects.all())
+    text_value = forms.CharField(widget=forms.Textarea)
+
     class Meta:
-        models = ArticleContent
-        fields = '__all__'
+        models = Article
+        fields = ('status', 'access', 'field_text', 'text_value')
+
+    def __init__(self, *args, **kwargs):
+        super(CreateArticleForm, self).__init__(*args, **kwargs)
+        self.fields['status'].widget.attrs['class'] = 'form-control form_field'
+        self.fields['access'].widget.attrs['class'] = 'form-control form_field'
+        self.fields['field_text'].widget.attrs['class'] = 'form-control form_field'
+        self.fields['text_value'].widget.attrs['class'] = 'form-control form_field mytextarea'
+        # for key, field in self.fields.items():
+        #     field.widget.attrs['class'] = 'form-control form_field'
