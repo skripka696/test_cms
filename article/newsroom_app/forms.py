@@ -34,18 +34,25 @@ class AdminCreateStyle(forms.Form):
 
 
 class BaseArticleFormSet(BaseFormSet):
+    def check_form_data(self, current_form, totals_forms):
+        curr_cleaned_data = current_form.cleaned_data
+        for form in totals_forms:
+            if form == current_form:
+                continue
+
+            f1_cleaned_data = form.cleaned_data
+            if curr_cleaned_data.get('style') == f1_cleaned_data.get('style'):
+                return True
+        return False
+
     def clean(self):
         if any(self.errors):
             return
 
         if self.total_form_count() > 1:
-            for i in range(0, self.total_form_count()):
-                f1_cleaned_data = self.forms[i].cleaned_data
-                for j in range(0, self.total_form_count()):
-                    f2_cleaned_data = self.forms[j].cleaned_data
-                    if f1_cleaned_data.get('style') and f2_cleaned_data.get('style'):
-                        if f1_cleaned_data.get('style') == f2_cleaned_data.get('style'):
-                            raise forms.ValidationError('You choosed two or more equal styles')
+            for form in self.forms:
+                if self.check_form_data(form, self.forms):
+                    raise forms.ValidationError('You choosed two or more equal styles')
 
 
 AdminCreateStyleFormSet = formset_factory(AdminCreateStyle,
