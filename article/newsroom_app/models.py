@@ -19,6 +19,7 @@ class StyleValue(models.Model):
 
 
 class Field(models.Model):
+    field_class = models.CharField(max_length=50, default='main')
     description = models.CharField(max_length=255)
     tag = models.CharField(max_length=255)
     style = models.ManyToManyField(StyleValue, blank=True, null=True)

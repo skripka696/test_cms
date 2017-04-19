@@ -75,6 +75,7 @@ class CreateArticleForm(forms.Form):
         self.fields['status'].widget.attrs['class'] = 'form-control form_field'
         self.fields['access'].widget.attrs['class'] = 'form-control form_field'
         self.fields['field_text'].widget.attrs['class'] = 'form-control form_field'
-        self.fields['text_value'].widget.attrs['class'] = 'form-control form_field mytextarea'
+        self.fields['text_value'].widget.attrs['class'] = 'form-control form_field'
+        self.fields['text_value'].widget.attrs['id'] = 'mytextarea'
         # for key, field in self.fields.items():
         #     field.widget.attrs['class'] = 'form-control form_field'
