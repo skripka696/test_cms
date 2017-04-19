@@ -46,23 +46,6 @@ def get_style_options(request, id):
         'data': [model_to_dict(style_options) for style_options in styles_options]
     })
 
-#
-# @login_required
-# def get_field_style(request):
-#     styles = Field.objects.all()
-#     style_data = {
-#         'title': {},
-#         'main content': {},
-#     }
-#     for style in styles:
-#         t = {}
-#         for item in style.style.all():
-#             t[item.style.name] = item.value
-#         if t:
-#             style_data[style.description] = t
-#
-#     return JsonResponse(style_data)
-
 
 class CreateArticle(FormView):
     model = Article
