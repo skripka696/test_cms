@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}All styles{% endblock %}
+
+{% block js %}
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="row">
+            <div class="col-6">
+                <h1 class="header col-12">All available styles</h1>
+                {% for obj in object_list %}
+                    {{ obj }}
+                {% endfor %}
+            </div>
+            <div class="col-6">
+                <h1 class="header col-12">Demo</h1>
+                <div class="rendered_tags">
+                    <p>Please choose one of styles</p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

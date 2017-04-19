@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
-from django.http.response import JsonResponse
+from django.http.response import JsonResponse, HttpResponseRedirect
+from django.urls.base import reverse_lazy
 from django.views.generic import FormView
+from django.views.generic.list import ListView
 from newsroom_app.models import StyleValue, Field, ArticleContent
 from newsroom_app.forms import AdminCreateStyleFormSet
 
@@ -23,13 +25,18 @@ class CreateStyle(FormView):
                     form.save()
                 else:
                     return self.render_to_response(self.get_context_data())
-            return HttpResponse()
+            return HttpResponseRedirect(reverse_lazy('style_list'))
         else:
             return self.render_to_response(self.get_context_data(form=formset))
 
     def get_context_data(self, **kwargs):
         context = super(CreateStyle, self).get_context_data(**kwargs)
         return context
+
+
+class StyleListView(ListView):
+    model = Field
+    template_name = 'style_list.html'
 
 
 @login_required
