@@ -1,0 +1,9 @@
+:root {
+  /* :root is a clever way of saying "the outer-most element" */
+
+  --title-color: #d32fff; /* the default */
+}
+
+.title{
+    color: var(--title-color)
+}
