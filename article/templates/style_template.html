@@ -1,0 +1,7 @@
+{% for selector in selectors%}
+    .{{selector.description}} {
+        {% for style in selector.style.all %}
+            {{style.style.name}}: {{style.value}};
+        {% endfor %}
+    }
+{% endfor %}

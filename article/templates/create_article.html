@@ -3,12 +3,11 @@
 {% block title %}Login{% endblock %}
 
 {% block js %}
-<link rel="stylesheet" type="text/css" href="{%  static 'field_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{%  static 'article_style.css' %}">
 <script src="{%  static 'js/add_form_style.js' %}"></script>
 <script src="{%  static 'js/generate_css.js' %}"></script>
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 <script>
-    var url_to_get_field_style = "{% url 'get_field_style' %}";
 
     $(function () {
          tinymce.init({
