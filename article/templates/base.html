@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +21,10 @@
     <div>
         <ul class="nav nav-tabs">
             {% if user.is_authenticated %}
-                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'logout' %}">{% trans "Logout" %}</a></li>
             {% else %}
-                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'login' %}">LogIn</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'registr' %}">Registration</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'login' %}">{% trans "LogIn" %}</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="{% url 'registr' %}">{% trans "Registration" %}</a></li>
             {% endif %}
         </ul>
     </div>

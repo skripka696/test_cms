@@ -1,16 +1,18 @@
 from django.db import models
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+
 
 
 class Style(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(_('name'), max_length=100)
 
     def __str__(self):
         return self.name
 
 
 class StyleValue(models.Model):
-    name = models.CharField(max_length=50, blank=True, null=True)
+    name = models.CharField(_('name'), max_length=50, blank=True, null=True)
     style = models.ForeignKey(Style)
     value = models.CharField(max_length=255)
 
@@ -30,12 +32,12 @@ class Field(models.Model):
 
 class Article(models.Model):
     ACCESS_CHOICES = (
-        ('public', 'public'),
-        ('official', 'official')
+        ('public', _('public')),
+        ('official', _('official'))
     )
     STATUS_CHOICES = (
-        ('in_progress', 'in_progress'),
-        ('published', 'published')
+        ('in_progress', _('in_progress')),
+        ('published', _('published'))
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES, default='in_progress')
@@ -49,8 +51,8 @@ class Article(models.Model):
 
 class ArticleContent(models.Model):
     LANGUAGE_CHOICES = (
-        ('ru', 'russian'),
-        ('uk', 'ukrainian')
+        ('ru', _('russian')),
+        ('uk', _('ukrainian'))
     )
     field = models.ManyToManyField(Field)
     article = models.ForeignKey(Article)

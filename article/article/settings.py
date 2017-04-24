@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'newsroom_app.apps.NewsroomAppConfig',
     'user_profile.apps.UserProfileConfig',
     'tinymce',
+    'rosetta',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'article.urls'
@@ -65,8 +68,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
             ],
         },
+
     },
 ]
 
@@ -141,6 +146,16 @@ LOGIN_REDIRECT_URL = '/home/'
 LOGIN_URL = '/login/'
 
 AUTH_USER_MODEL = 'user_profile.User'
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/'),
+)
+
+LANGUAGES = (
+    ('en', _('English')),
+    ('ru', _('russian')),
+    ('uk', _('ukrainian'))
+)
 
 try:
     from .local_settings import *

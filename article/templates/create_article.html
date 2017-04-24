@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 {% block title %}Login{% endblock %}
 
 {% block js %}
 <link rel="stylesheet" type="text/css" href="{%  static 'article_style.css' %}">
 <script src="{%  static 'js/add_form_style.js' %}"></script>
-<script src="{%  static 'js/generate_css.js' %}"></script>
+<script src="{%  static 'js/choice_field.js' %}"></script>
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 <script>
 
@@ -27,7 +28,30 @@
 
 {% block content %}
 <form class="add_article" action="" method="post">{% csrf_token %}
-    {{form.as_p}}
-    <p class="title">Title</p>
+    <div class="form-group">
+        <label for="InputStatus">{% trans "Status" %}: </label>
+        {{form.status}}
+    </div>
+    <div class="form-group">
+        <label for="InputAccess">{% trans "Access" %}: </label>
+        {{form.access}}
+    </div>
+    <div class="form-group">
+        <label for="InputField">{% trans "Fields" %}: </label>
+        {{form.field_text}}
+    </div>
+    <div class="form-group" style="display: none;">
+        <label for="InputTitle">{% trans "Title" %}: </label>
+        {{form.title}}
+    </div>
+    <div style="display: none;" class="form-group" >
+        <label for="InputMain_Content">{% trans "Main content" %}: </label>
+        {{form.main_content}}
+    </div>
+
+
+    <div class="col-12">
+        <input id="save_form" class="btn btn-default pull-right col-1" type="submit" value="Save"/>
+    </div>
 </form>
 {% endblock %}

@@ -64,7 +64,8 @@ class CreateArticleForm(forms.Form):
     status = forms.ChoiceField(label='Status', choices=Article.STATUS_CHOICES)
     access = forms.ChoiceField(label='Access', choices=Article.ACCESS_CHOICES)
     field_text = forms.ModelChoiceField(queryset=Field.objects.all())
-    text_value = forms.CharField(widget=forms.Textarea)
+    main_content = forms.CharField(widget=forms.Textarea, required=False)
+    title = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
         models = Article
@@ -75,7 +76,12 @@ class CreateArticleForm(forms.Form):
         self.fields['status'].widget.attrs['class'] = 'form-control form_field'
         self.fields['access'].widget.attrs['class'] = 'form-control form_field'
         self.fields['field_text'].widget.attrs['class'] = 'form-control form_field'
-        self.fields['text_value'].widget.attrs['class'] = 'form-control form_field'
-        self.fields['text_value'].widget.attrs['id'] = 'mytextarea'
-        # for key, field in self.fields.items():
-        #     field.widget.attrs['class'] = 'form-control form_field'
+        self.fields['title'].widget.attrs['class'] = 'form-control form_field mytextarea title'
+        self.fields['title'].widget.attrs['style'] = 'display:none'
+        self.fields['main_content'].widget.attrs['class'] = 'form-control form_field main_content'
+        self.fields['main_content'].widget.attrs['style'] = 'display:none'
+
+
+
+
+

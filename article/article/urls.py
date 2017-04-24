@@ -15,11 +15,17 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import ugettext_lazy as _
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('user_profile.urls')),
-    url(r'^', include('newsroom_app.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^rosetta/', include('rosetta.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 
 ]
+urlpatterns += i18n_patterns(
+    url(r'^', include('user_profile.urls')),
+    url(r'^', include('newsroom_app.urls')),
+)
