@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
 from django.http.response import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.urls.base import reverse_lazy
 from django.views.generic import FormView
 from django.views.generic.list import ListView
@@ -53,7 +54,18 @@ class CreateArticle(FormView):
     form_class = CreateArticleForm
 
     def post(self, request, *args, **kwargs):
-        return HttpResponse()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form, self.request.user)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form, user):
+        self.object = form.save(user)
+        return super(CreateArticle, self).form_valid(form)
+
+    def form_invalid(self, form):
+        return render(self.request, self.template_name, {'form': form})
 
     def get_context_data(self, **kwargs):
         context = super(CreateArticle, self).get_context_data(**kwargs)

@@ -68,7 +68,7 @@ class CreateArticleForm(forms.Form):
     title = forms.CharField(widget=forms.Textarea, required=False)
 
     class Meta:
-        models = Article
+        models = ArticleContent
         fields = ('status', 'access', 'field_text', 'text_value')
 
     def __init__(self, *args, **kwargs):
@@ -80,6 +80,24 @@ class CreateArticleForm(forms.Form):
         self.fields['title'].widget.attrs['style'] = 'display:none'
         self.fields['main_content'].widget.attrs['class'] = 'form-control form_field main_content'
         self.fields['main_content'].widget.attrs['style'] = 'display:none'
+
+    def save(self, user):
+        article = Article(user=user, status=self.cleaned_data['status'],
+                          access=self.cleaned_data['access'])
+        article.save()
+        article_content = ArticleContent(article=article)
+        fields_exists = []
+        for field in self.fields['field_text'].queryset:
+            if self.cleaned_data[field.description]:
+                article_content.text_value = self.cleaned_data[field.description]
+                fields_exists.append(Field.objects.get(description=field))
+        article_content.save()
+        if fields_exists:
+            for field in fields_exists:
+                article_content.field.add(field)
+
+
+
 
 
 

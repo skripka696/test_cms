@@ -17,3 +17,6 @@ class User(AbstractUser):
 
     role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='reader')
     gender = models.CharField(max_length=50, choices=GENDER_CHOICES, default='M')
+
+    def __str__(self):
+        return self.username
