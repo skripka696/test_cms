@@ -85,16 +85,13 @@ class CreateArticleForm(forms.Form):
         article = Article(user=user, status=self.cleaned_data['status'],
                           access=self.cleaned_data['access'])
         article.save()
-        article_content = ArticleContent(article=article)
-        fields_exists = []
         for field in self.fields['field_text'].queryset:
             if self.cleaned_data[field.description]:
-                article_content.text_value = self.cleaned_data[field.description]
-                fields_exists.append(Field.objects.get(description=field))
-        article_content.save()
-        if fields_exists:
-            for field in fields_exists:
-                article_content.field.add(field)
+                article_content = ArticleContent(
+                    article=article,
+                    text_value=self.cleaned_data[field.description],
+                    field=Field.objects.get(description=field))
+                article_content.save()
 
 
 

@@ -3,7 +3,6 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 
-
 class Style(models.Model):
     name = models.CharField(_('name'), max_length=100)
 
@@ -54,10 +53,16 @@ class ArticleContent(models.Model):
         ('ru', _('russian')),
         ('uk', _('ukrainian'))
     )
-    field = models.ManyToManyField(Field)
+    field = models.ForeignKey(Field)
     article = models.ForeignKey(Article)
     text_value = models.TextField(blank=True, null=True)
     language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES, default='ru')
+
+
+class ArticleContentExtraFilds(models.Model):
+    article_content = models.ForeignKey(ArticleContent)
+    image_field = models.ImageField()
+    file_field = models.FileField()
 
 
 class Revision(models.Model):
